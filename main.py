@@ -1,12 +1,13 @@
 import flask
-import flask_login
 import rockset
 import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import os
+from jinja2 import Template
+from random import randint
 
-def send_mail(address):
+def send_mail(address, ver_code):
     sender_email = os.getenv('EMAIL_EMAIL')
     receiver_email = address
     password = os.getenv('EMAIL_PW')
@@ -15,12 +16,19 @@ def send_mail(address):
     message['Subject'] = 'Harker Hackers Subscription'
     message['From'] = sender_email
     message['To'] = receiver_email
+
+    body = Template(
+            open(
+                'verification.jinja', 
+                'r'
+            ).read()
+        ).render({
+            'code': ver_code
+        })
+
     message.attach(
         MIMEText(
-            open(
-                'verification.html', 
-                'r'
-            ).read(), 
+            body,
             'html'
         )
     )
@@ -53,21 +61,64 @@ def login():
     )
 
 @app.route('/authorized')
-def console():
+def after():
     email = flask.request.args.get('email')
-    send_mail(email)
+    ver_code = randint(1, 10000)
+    send_mail(email, ver_code)
 
-    print(
-        collection.add_docs([{
-            '_id': email
-        }])
-    )
-    return(
-        flask.render_template(
-            'authorized.jinja',
-            email=email
+    res = rs.sql(
+        rockset.Q(
+            'harker_hackers.emails'
+        ).where(
+            rockset.F['code'] == ver_code
+        ).select(
+            rockset.F['email']
         )
     )
+
+    if res == []:
+        return('Already subbed')
+    else:
+        print(
+            collection.add_docs([{
+                '_id': email,
+                'verified': False,
+                'code': ver_code
+            }])
+        )
+
+        return(
+            flask.render_template(
+                'please_verify.jinja',
+                email=email
+            )
+        )
+
+@app.route('/authorized/<ver_code>')
+def verify(ver_code):
+    res = rs.sql(
+        rockset.Q(
+            'select _id from harker_hackers.emails where code={}'.format(
+                ver_code
+            )
+        )
+    )
+    email = res[0]['_id']
+
+    if res != []:
+        collection.add_docs([{
+            '_id': email,
+            'verified': True,
+        }])
+        return(
+            flask.render_template(
+                'verified.jinja',
+                email=email
+            )
+        )
+    else:
+        return('Email not found')
+
 
 if __name__ == '__main__':
     app.run()
