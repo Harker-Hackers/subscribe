@@ -1,0 +1,29 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Description">
+    <meta name="author" content="Aarav Borthakur">
+    <link rel="icon" href="logo.png">
+    <title>Harker Hackers Subscription</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for("static", filename="signin.css") }}" rel="stylesheet">
+    <script src="{{ url_for("static", filename="after_login.js") }}"></script>
+  </head>
+
+  <body class="text-center">
+    <form class="form-signin" action="/authorized" method="get">
+      <a href="https://harker-hackers.github.io/">
+        <img class="mb-4" src="{{ url_for("static", filename="logo.png") }}" alt="" width="172" height="172">
+      </a>
+      <h1 class="h5 mb-3 font-weight-normal">Subscribe to Harker Hacker's projects and blogs</h1>
+
+      <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email" required>
+
+      <button class="btn btn-lg btn-primary btn-block" type="submit" value="Submit">Subscribe</button>
+      <p class="mt-5 mb-3 text-muted">Copyright &copy; 2021</p>
+    </form>
+  </body>
+</html>

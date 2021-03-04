@@ -1,0 +1,20 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="logo.png">
+    <title>Harker Hackers Subscription</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="{{ url_for("static", filename="authorized.css") }}" rel="stylesheet">
+  </head>
+
+  <body>
+    <main class="container">
+      <h1 class="mt-5">Thanks for subscribing!</h1>
+      <p class="lead">You will recieve an email at <u>{{ email }}</u> as verification within the minute. You'll be notified about our latest projects, blogs, and announcements! <br><br>Your support is tremendously appreciated.</p>
+    </main>
+  </body>
+</html>
