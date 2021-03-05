@@ -7,7 +7,7 @@ import os
 from jinja2 import Template
 from shortuuid import uuid
 
-def send_mail(address, ver_code):
+def send_mail(address, ver_code, body):
     sender_email = os.getenv('EMAIL_EMAIL')
     receiver_email = address
     password = os.getenv('EMAIL_PW')
@@ -16,16 +16,6 @@ def send_mail(address, ver_code):
     message['Subject'] = 'Harker Hackers Subscription'
     message['From'] = sender_email
     message['To'] = receiver_email
-
-    body = Template(
-            open(
-                'verification.jinja', 
-                'r'
-            ).read()
-        ).render({
-            'code': ver_code,
-            'email': address
-        })
 
     message.attach(
         MIMEText(
@@ -75,7 +65,17 @@ def after():
     )
 
     if res == []:
-        send_mail(email, ver_code)
+        body = Template(
+            open(
+                'email_templates/verification.jinja', 
+                'r'
+            ).read()
+        ).render({
+            'code': ver_code,
+            'email': email
+        })
+        send_mail(email, ver_code, body)
+
         print(
             collection.add_docs([{
                 '_id': email,
@@ -83,17 +83,20 @@ def after():
                 'code': ver_code
             }])
         )
-
-        return(
-            flask.render_template(
-                'please_verify.jinja',
-                email=email
-            )
-        )
-
     else:
-        print(res)
-        return('Already subbed')
+        body = open(
+            'email_templates/already_verified.html', 
+            'r'
+        ).read()
+
+        send_mail(email, ver_code, body)
+
+    return(
+        flask.render_template(
+            'please_verify.jinja',
+            email=email
+        )
+    )
 
 @app.route('/authorized/<ver_code>/<ver_email>')
 def verify(ver_code, ver_email):
@@ -105,6 +108,7 @@ def verify(ver_code, ver_email):
             )
         )
     )
+
     email = res[0]['_id']
 
     if res != []:
