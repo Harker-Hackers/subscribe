@@ -5,7 +5,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import os
 from jinja2 import Template
-from random import randint
+from shortuuid import uuid
 
 def send_mail(address, ver_code):
     sender_email = os.getenv('EMAIL_EMAIL')
@@ -62,7 +62,7 @@ def login():
 @app.route('/authorized')
 def after():
     email = flask.request.args.get('email')
-    ver_code = randint(1, 10000)
+    ver_code = uuid()
 
     res = list(
             rs.sql(
