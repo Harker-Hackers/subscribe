@@ -23,7 +23,8 @@ def send_mail(address, ver_code):
                 'r'
             ).read()
         ).render({
-            'code': ver_code
+            'code': ver_code,
+            'email': address
         })
 
     message.attach(
@@ -62,21 +63,19 @@ def login():
 def after():
     email = flask.request.args.get('email')
     ver_code = randint(1, 10000)
-    send_mail(email, ver_code)
 
-    res = rs.sql(
-        rockset.Q(
-            'harker_hackers.emails'
-        ).where(
-            rockset.F['_id'] == email
-        ).select(
-            '*'
+    res = list(
+            rs.sql(
+            rockset.Q(
+                'harker_hackers.emails'
+            ).where(
+                rockset.F['_id'] == email
+            ).select('*')
         )
     )
 
-    if res != []:
-        return('Already subbed')
-    else:
+    if res == []:
+        send_mail(email, ver_code)
         print(
             collection.add_docs([{
                 '_id': email,
@@ -92,12 +91,17 @@ def after():
             )
         )
 
-@app.route('/authorized/<ver_code>')
-def verify(ver_code):
+    else:
+        print(res)
+        return('Already subbed')
+
+@app.route('/authorized/<ver_code>/<ver_email>')
+def verify(ver_code, ver_email):
     res = rs.sql(
         rockset.Q(
-            'select _id from harker_hackers.emails where code={}'.format(
-                ver_code
+            'select _id from harker_hackers.emails where code={} and _id=\'{}\''.format(
+                ver_code,
+                ver_email
             )
         )
     )
@@ -116,7 +120,6 @@ def verify(ver_code):
         )
     else:
         return('Email not found')
-
 
 if __name__ == '__main__':
     app.run()
