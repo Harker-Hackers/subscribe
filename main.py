@@ -35,8 +35,6 @@ def send_mail(address, ver_code):
     context = ssl.create_default_context()
 
     with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as server:
-        print(sender_email)
-        print(password)
         server.login(sender_email, password)
         server.sendmail(
             sender_email, receiver_email, message.as_string()
@@ -70,13 +68,13 @@ def after():
         rockset.Q(
             'harker_hackers.emails'
         ).where(
-            rockset.F['code'] == ver_code
+            rockset.F['_id'] == email
         ).select(
-            rockset.F['email']
+            '*'
         )
     )
 
-    if res == []:
+    if res != []:
         return('Already subbed')
     else:
         print(
