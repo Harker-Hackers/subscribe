@@ -102,7 +102,7 @@ def after():
 def verify(ver_code, ver_email):
     res = rs.sql(
         rockset.Q(
-            'select _id from harker_hackers.emails where code={} and _id=\'{}\''.format(
+            'select _id from harker_hackers.emails where code=\'{}\' and _id=\'{}\''.format(
                 ver_code,
                 ver_email
             )
