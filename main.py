@@ -85,7 +85,7 @@ def after():
         )
     else:
         body = open(
-            'email_templates/already_verified.html', 
+            'email_templates/already_subbed.html', 
             'r'
         ).read()
 
