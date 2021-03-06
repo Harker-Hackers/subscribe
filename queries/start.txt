@@ -1,0 +1,9 @@
+These are the main queries this system uses to retrieve users.
+Execute these commands with "npm run <command>"
+
+Commands:
+    - get-verified
+    - get-unverified
+    - get-unverified-codes
+    - get-signup-times
+    - get-all

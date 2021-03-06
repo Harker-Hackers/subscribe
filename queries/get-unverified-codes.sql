@@ -1,0 +1,1 @@
+select code from harker_hackers.emails where verified=false
