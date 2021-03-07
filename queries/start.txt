@@ -6,4 +6,5 @@ Commands:
     - get-unverified
     - get-unverified-codes
     - get-signup-times
+    - get-all-emails
     - get-all

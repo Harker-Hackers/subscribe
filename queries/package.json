@@ -9,6 +9,7 @@
     "get-unverified": "sh mini-scripts/horizontal-line.sh && node_modules/@rockset/cli/bin/run sql \"$(cat get-unverified.sql)\" && sh mini-scripts/horizontal-line.sh",
     "get-unverified-codes": "sh mini-scripts/horizontal-line.sh && node_modules/@rockset/cli/bin/run sql \"$(cat get-unverified-codes.sql)\" && sh mini-scripts/horizontal-line.sh",
     "get-signup-times": "sh mini-scripts/horizontal-line.sh && node_modules/@rockset/cli/bin/run sql \"$(cat get-signup-times.sql)\" && sh mini-scripts/horizontal-line.sh",
+    "get-all-emails": "sh mini-scripts/horizontal-line.sh && node_modules/@rockset/cli/bin/run sql \"$(cat get-all-emails.sql)\" && sh mini-scripts/horizontal-line.sh",
     "get-all": "sh mini-scripts/horizontal-line.sh && node_modules/@rockset/cli/bin/run sql \"$(cat get-all.sql)\" && sh mini-scripts/horizontal-line.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
