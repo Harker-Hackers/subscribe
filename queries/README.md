@@ -5,6 +5,6 @@ This directory has the basic queries used to retrieve users.
     npm install
     npm start
 
-`npm start` should return the commands you can run. Run them with `npm run <command>`.
+`npm start` will return the commands you can run. Run them with `npm run <command>`.
 
 For example, if you wanted to retrieve all verified users, run `npm run get-verified`.
