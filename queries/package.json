@@ -4,7 +4,7 @@
   "description": "",
   "main": "start.sh",
   "scripts": {
-    "start": "echo \"$(cat start.txt)\" && echo",
+    "start": "sh scripts/start.sh",
     "get-verified": "sh scripts/exec-query.sh \"$(cat get-verified.sql)\"",
     "get-unverified": "sh scripts/exec-query.sh \"$(cat get-unverified.sql)\"",
     "get-unverified-codes": "sh scripts/exec-query.sh \"$(cat get-unverified-codes.sql)\"",
