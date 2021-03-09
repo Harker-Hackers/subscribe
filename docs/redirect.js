@@ -1,0 +1,1 @@
+window.location.replace("https://harker-hackers.herokuapp.com/");
