@@ -15,7 +15,7 @@ body {
   justify-content: center;
   padding-top: 10px;
   padding-bottom: 40px;
-  background-color: #f5f5f5;
+  background-image: linear-gradient(to bottom right, darkgreen, white);
 }
 
 .form-signin {
