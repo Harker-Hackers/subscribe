@@ -1,2 +1,1 @@
 The repository has the source code for our subscription service, which can be found [here](https://harker-hackers.herokuapp.com/). 
-You can read about how it was made [here](https://gadhagod.medium.com/how-i-built-a-super-simple-and-practical-email-subscription-service-with-address-authentication-a10e81c4a92c).
